@@ -1,3 +1,11 @@
+<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+data-bs-target="#staticBackdrop" (click)="createInvoice()">
+  <i class="fa-solid fa-plus"
+  style="font-size: 1.3rem; cursor: pointer;"
+  >
+</i>
+  Crear una nueva facutra</button>
+
 <div class="d-flex p-3" id="table">
   <table class="table table-bordered">
     <thead>
@@ -40,19 +48,22 @@
             style="font-size: 1.3rem; cursor: pointer;"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
-            (click)="showModalEdit(invoice)">
+            (click)="showModalEdit(invoice)"
+            [attr.title]="'Editar factura '">
           </i>
           <i class="fa-solid fa-eye"
             style="font-size: 1.3rem; cursor: pointer;"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
-            (click)="showModalEdit(invoice)">
+            (click)="showInvoice(invoice)"
+            [attr.title]="'ver factura '">
           </i>
           <i class="fa-solid fa-trash"
             style="font-size: 1.3rem; cursor: pointer;"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
-            (click)="onSave(invoice)">
+            (click)="onSave(invoice)"
+            [attr.title]="'Eliminar factura'">
           </i>
         </td>
       </tr>
@@ -61,4 +72,9 @@
 </div>
 
 <shared-modal
-[title]="title"></shared-modal>
+[title]="title"
+[meansPayment]="meansPayment"
+[newInvoice]="isEdit"
+[isDelete]="isDelete"
+[selectedInvoice]="selectedInvoice">
+</shared-modal>

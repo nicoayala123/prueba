@@ -10,13 +10,19 @@ import { InvocesService } from 'src/app/shared/services/invoces.service';
 export class TablaComponent implements OnInit {
   @Output() emitInvoce? = new EventEmitter()
   invoices? : any = [];
+  selectedInvoice!: any;
   invocesSeleted? : IInvoices | null;
   title = '';
+  isDelete = false
 
   isEdit = false;
 
+  meansPayment! : any[];
+  states! : any[];
+
   newData = [
     {
+      id: 11,
       commerce: {
         code: 1,
         name: 'Comercio de ropa',
@@ -38,25 +44,43 @@ export class TablaComponent implements OnInit {
     }
   ]
 
-
-
   constructor(
     private invoicesServices : InvocesService  ) {}
 
   ngOnInit() {
     this.invoices = this.invoicesServices.getInvoicesData();
-    console.log(this.invoices);
-  }
-  seleccionarInvoice(invoice: IInvoices): void {
-    this.invocesSeleted = { ...invoice }; // Hacemos una copia para evitar modificar directamente el objeto original
+    console.log(this.invoices)
+    this.meansPayment = this.invoicesServices.getPayment();
+    this.states = this.invoicesServices.getStates();
   }
 
   showModalEdit(invoice : IInvoices){
-    this.seleccionarInvoice(invoice);
+    console.log(invoice);
     this.emitInvoce?.emit(invoice);
     this.isEdit = true;
     this.title = "Editar factura"
   }
+  createInvoice(){
+    this.isEdit = true;
+    this.title = "Nueva factura"
+  }
+
+  showInvoice(invoice : IInvoices){
+    let id = invoice.id
+    console.log(invoice, id);
+    this.isEdit = false;
+    this.isDelete = false;
+    this.title = `Factura ${{id}}`;
+    this.selectedInvoice = invoice
+  }
+
+  deleteInvoice(invoice : IInvoices){
+    this.isEdit = false;
+    this.isDelete = true;
+    this.title = `Eliminar factura`;
+    this.selectedInvoice = invoice
+  }
+
 
   onSave(newData : any){
     this.invoicesServices.saveInvoicesData(this.newData)
