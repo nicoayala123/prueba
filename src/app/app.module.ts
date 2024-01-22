@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CRUDModule } from './CRUD/CRUD.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,7 +19,8 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    PrimengComponentsModule
+    PrimengComponentsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

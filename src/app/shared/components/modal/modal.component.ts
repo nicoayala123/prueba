@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IInvoices } from '../../Interfaces/IInvoces.interface';
 import { InvocesService } from '../../services/invoces.service';
@@ -16,6 +16,7 @@ export class ModalComponent implements OnInit {
 @Input() public states? : any[];
 @Input() public newInvoice = false;
 @Input() public isDelete = false;
+@Output() public emitInvoiceForms = new EventEmitter<void>();
 
 paymentSeled! : string;
 
@@ -94,6 +95,8 @@ public invoiceData!: IInvoices;
 
     // Puedes restablecer el formulario después de agregar el nuevo registro si es necesario
     this.selectedInvoiceForm.reset();
+
+    this.goBack();
   }
 
   // private updateForm(): void {
@@ -119,6 +122,7 @@ public invoiceData!: IInvoices;
 
   removeInvoce(id : any) {
   this.invocesService.removeInvoice(id);
+  window.location.reload();
   }
 
   goBack(){

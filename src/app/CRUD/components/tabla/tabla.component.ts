@@ -9,6 +9,7 @@ import { InvocesService } from 'src/app/shared/services/invoces.service';
 })
 export class TablaComponent implements OnInit {
   @Output() emitInvoce? = new EventEmitter()
+  @Output() updateTable = new EventEmitter<void>();
   invoices? : any = [];
   selectedInvoice!: any;
   invocesSeleted? : IInvoices | null;
@@ -19,6 +20,7 @@ export class TablaComponent implements OnInit {
 
   meansPayment! : any[];
   states! : any[];
+
 
   newData = [
     {
@@ -49,7 +51,7 @@ export class TablaComponent implements OnInit {
 
   ngOnInit() {
     this.invoices = this.invoicesServices.getInvoicesData();
-    console.log(this.invoices)
+    console.log('Respuesta', this.invoices)
     this.meansPayment = this.invoicesServices.getPayment();
     this.states = this.invoicesServices.getStates();
   }
@@ -82,7 +84,11 @@ export class TablaComponent implements OnInit {
   }
 
 
-  onSave(newData : any){
-    this.invoicesServices.saveInvoicesData(this.newData)
+  onSave(newData: any) {
+    // Guarda los nuevos datos en el servicio
+    this.invoicesServices.saveInvoicesData([...this.invoices, newData]);
+
+    // Actualiza la tabla emitiendo un evento
+    this.updateTable.emit();
   }
 }

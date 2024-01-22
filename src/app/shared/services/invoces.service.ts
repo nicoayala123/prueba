@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { invoicesMock, meansPaymentMock, statesMock } from 'src/app/Mocks/invoces.mock';
 import { IInvoices } from '../Interfaces/IInvoces.interface';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +22,10 @@ export class InvocesService {
   private payment: any[] = JSON.parse(localStorage.getItem(this.localStoragePayment) ?? 'null' ) || meansPaymentMock;
 
   private states: any[] = JSON.parse(localStorage.getItem(this.localStorageStates) ?? 'null' ) || statesMock;
+
+  constructor(
+    private http: HttpClient
+  ){}
 
   public getInvoicesData(): IInvoices[] {
     console.log(this.data);
